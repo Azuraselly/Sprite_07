@@ -1,12 +1,12 @@
-import 'package:flame/sprite.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/sprite.dart';
 import 'package:flame/components.dart';
 import 'package:sprite_07/utils/create_animation_by_limit.dart';
 
 class PlayerSpriteSheetComponentAnimation extends SpriteAnimationComponent with HasGameReference {
   late double screenWidth;
   late double screenHeight;
-
+  
   late double centerX;
   late double centerY;
 
@@ -16,28 +16,35 @@ class PlayerSpriteSheetComponentAnimation extends SpriteAnimationComponent with 
   late SpriteAnimation dinoAnimation;
 
   @override
-  void onLoad() async {
+  void onLoad()async {
     super.onLoad();
+
     screenWidth = game.size.x;
     screenHeight = game.size.y;
-    centerX = (screenWidth/2) - (spriteSheetWidth/2);
-    centerY = (screenHeight/2) - (spriteSheetHeight/2);
+
+    centerX = (screenWidth / 2) - (spriteSheetWidth / 2);
+    centerY = (screenHeight / 2) - (spriteSheetHeight / 2);
 
     var spriteImages = await Flame.images.load('dino.png');
 
     final spriteSheet = SpriteSheet(
       image: spriteImages,
-      srcSize: Vector2(spriteSheetWidth, spriteSheetHeight));
-      position=Vector2(centerX, centerY);
-      size=Vector2(spriteSheetWidth, spriteSheetHeight);
+      srcSize: Vector2(spriteSheetWidth, spriteSheetHeight),
+    );
+
+    position = Vector2(centerX, centerY);
+    size = Vector2(spriteSheetWidth, spriteSheetHeight);
 
     dinoAnimation = spriteSheet.createAnimationByLimit(
       xInit: 0,
       yInit: 0,
-      step: 10,
-      sizeX: 2,
-      stepTime: .80,
-    );
+      step: 8,
+      sizeX: 8,
+      stepTime: 0.1,
+      loop: true,
+    );  
+
     animation = dinoAnimation;
+
   }
 }
